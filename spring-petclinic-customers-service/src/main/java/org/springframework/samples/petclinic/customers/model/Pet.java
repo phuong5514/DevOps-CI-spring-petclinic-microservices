@@ -67,6 +67,7 @@ public class Pet {
     }
 
     public Integer getId() {
+        System.out.println(this.id);
         return this.id;
     }
 
