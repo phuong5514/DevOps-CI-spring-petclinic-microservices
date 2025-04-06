@@ -144,11 +144,12 @@ pipeline {
             }
           }
         }
-      
+
+
         stage('Build') {
             steps {
                 script {
-                  
+                    echo "Building services: ${env.BUILD_SERVICES}"
                     if (!env.BUILD_SERVICES || env.BUILD_SERVICES == "") {
                       echo "Skipping build"
                       return
