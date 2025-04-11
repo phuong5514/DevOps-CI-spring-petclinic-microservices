@@ -12,7 +12,7 @@ class SpecialtyResourceTest {
   void shouldCreateSpecialty() {
     Specialty specialty = new Specialty();
     specialty.setName("surgery");
-    specialty.setId(1);
+    specialty.setId(2);
     assertThat(specialty).isNotNull();
     assertThat(specialty.getId()).isEqualTo(1);
     assertThat(specialty.getName()).isEqualTo("surgery");
