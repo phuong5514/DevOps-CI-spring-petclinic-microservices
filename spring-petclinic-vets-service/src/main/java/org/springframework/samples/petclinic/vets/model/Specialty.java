@@ -18,7 +18,7 @@ package org.springframework.samples.petclinic.vets.model;
 import jakarta.persistence.*;
 
 /**
- * Models a {@link Vet Vet's} specialty (for example, dentistry).
+ * Models b {@link Vet Vet's} specialty (for example, dentistry).
  * 
  * minor changes
  * @author Juergen Hoeller
