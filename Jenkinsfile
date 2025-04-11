@@ -60,7 +60,7 @@ pipeline {
             }
             steps {
                 script {
-                    def testBuildResult = "SUCCESS"
+                    def testBuildResult = true
 
                     env.BUILD_SERVICES.split(',').each { service ->
                         try {
@@ -89,10 +89,12 @@ pipeline {
                         } catch (Exception e) {
                             echo "Error testing ${service}: ${e.toString()}"
                             // fail the build if any test fails
-                            testBuildResult = 'FAILURE'
+                            testBuildResult = false
                         }
                     }
-                    currentBuild.result = testBuildResult
+                    if (!testBuildResult) {
+                        error "One or more tests failed. Please check the logs."
+                    }
                 }
             }
         }
