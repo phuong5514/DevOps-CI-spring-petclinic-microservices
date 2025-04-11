@@ -55,7 +55,7 @@ class VisitResourceTest {
 
         mvc.perform(get("/pets/visits?petId=111,222"))
             .andExpect(status().isOk())
-            .andExpect(jsonPath("$.items[0].id").value(1))
+            .andExpect(jsonPath("$.items[0].id").value(12))
             .andExpect(jsonPath("$.items[1].id").value(2))
             .andExpect(jsonPath("$.items[2].id").value(3))
             .andExpect(jsonPath("$.items[0].petId").value(111))
