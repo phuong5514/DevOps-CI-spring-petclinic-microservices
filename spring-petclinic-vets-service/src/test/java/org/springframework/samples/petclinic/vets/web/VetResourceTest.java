@@ -37,7 +37,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.Optional;
 
 /**
- * @author Maciej Szarlinski
+ * @author Maciej Szarlinski.
  */
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(VetResource.class)
