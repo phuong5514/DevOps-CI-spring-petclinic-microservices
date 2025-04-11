@@ -60,6 +60,8 @@ pipeline {
             }
             steps {
                 script {
+                    def testBuildResult = "SUCCESS"
+
                     env.BUILD_SERVICES.split(',').each { service ->
                         try {
                             if (service == "spring-petclinic-admin-server" || service == "spring-petclinic-genai-service") {
@@ -87,9 +89,10 @@ pipeline {
                         } catch (Exception e) {
                             echo "Error testing ${service}: ${e.toString()}"
                             // fail the build if any test fails
-                            currentBuild.result = 'FAILURE'
+                            testBuildResult = 'FAILURE'
                         }
                     }
+                    currentBuild.result = testBuildResult
                 }
             }
         }
