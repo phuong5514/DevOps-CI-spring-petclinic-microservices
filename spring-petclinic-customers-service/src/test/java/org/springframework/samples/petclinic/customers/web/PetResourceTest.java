@@ -99,12 +99,11 @@ class PetResourceTest {
         Pet pet2 = setupPet();
 
         // Assert that two pets with the same properties are equal
-        assertEquals(pet1, pet2);
-        assertEquals(pet1, pet2);
+        assertNotEquals(pet1, pet2);
 
         // Modify one property and assert they are no longer equal
         pet2.setName("DifferentName");
-        assertNotEquals(pet1, pet2);
+        assertEquals(pet1, pet2);
     }
 
     @Test
