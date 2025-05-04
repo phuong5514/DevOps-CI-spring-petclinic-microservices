@@ -116,6 +116,28 @@ pipeline {
                 }
             }
         }
+
+        stage('Docker Build & Push') {
+            when {
+                expression { return env.BUILD_SERVICES }
+            }
+            steps {
+                script {
+                    def commitId = sh(script: "git rev-parse --short HEAD", returnStdout: true).trim()
+                    env.COMMIT_ID = commitId
+
+                    env.BUILD_SERVICES.split(',').each { service ->
+                        echo "Building Docker image for ${service} with tag ${commitId}..."
+                        sh """
+                            cd ${service}
+                            docker build -t trgtamthanh/${service}:${commitId} .
+                            docker push trgtamthanh/${service}:${commitId}
+                        """
+                    }
+                }
+            }
+        }
+
     }
 }
 
