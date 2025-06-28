@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      http://www.apache.org/licenses/LICENSE-2.0 
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -26,6 +26,7 @@ import org.springframework.samples.petclinic.vets.model.VetRepository;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.samples.petclinic.vets.model.Specialty;
 
 import static java.util.Arrays.asList;
 import static org.mockito.BDDMockito.given;
@@ -33,8 +34,10 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.Optional;
+
 /**
- * @author Maciej Szarlinski
+ * @author Maciej Szarlinski.
  */
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(VetResource.class)
@@ -58,5 +61,22 @@ class VetResourceTest {
         mvc.perform(get("/vets").accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$[0].id").value(1));
+    }
+
+    @Test
+    void shouldManageVetPOJO() {
+        Vet vet = new Vet();
+        vet.setFirstName("John");
+        vet.setLastName("Doe");
+        
+        Specialty specialty = new Specialty();
+        specialty.setId(1);
+        specialty.setName("surgery");
+        vet.addSpecialty(specialty);
+
+        assert(vet.getFirstName().equals("John"));
+        assert(vet.getLastName().equals("Doe"));
+        assert(vet.getSpecialties().size() == 1);
+        assert(vet.getSpecialties().get(0).getName().equals("surgery"));
     }
 }
