@@ -8,10 +8,11 @@
  *      http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
+ * distributed under the License is distributed on an "AS IS" BASIS, 
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
- * limitations under the License.
+ * limitations under the License..
+ * .
  */
 package org.springframework.samples.petclinic.customers.model;
 
@@ -138,5 +139,28 @@ public class Owner {
 
     public void setTelephone(String telephone) {
         this.telephone = telephone;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Owner owner = (Owner) o;
+        return Objects.equals(id, owner.id) &&
+               Objects.equals(firstName, owner.firstName) &&
+               Objects.equals(lastName, owner.lastName) &&
+               Objects.equals(address, owner.address) &&
+               Objects.equals(city, owner.city) &&
+               Objects.equals(telephone, owner.telephone);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, firstName, lastName, address, city, telephone);
+    }
+
+    // Setting _id
+    public void setId(Integer id) {
+        this.id = id;
     }
 }
