@@ -12,7 +12,7 @@ pipeline {
           steps {
             script {
               // detecting changes
-              def changed_services = sh(script: "git diff --name-only HEAD~1", returnStdout: true).trim().split("\n")
+              def changed_services = bat(script: "git diff --name-only HEAD~1", returnStdout: true).trim().split("\n")
               def affectedServices = []
 
               // extracting services with changes
@@ -34,7 +34,7 @@ pipeline {
               
               affectedServices.each { service -> 
                   echo "Validating ${service}..."
-                  sh "cd ${service} && mvn validate"
+                  bat "cd ${service} && mvn validate"
               }
             }
           }
@@ -48,7 +48,7 @@ pipeline {
                 script {
                     env.BUILD_SERVICES.split(',').each { service ->
                         echo "Building ${service}..."
-                        sh "./mvnw -pl ${service} -am clean compile"
+                        bat "./mvnw -pl ${service} -am clean compile"
                     }
                 }
             }
@@ -68,7 +68,7 @@ pipeline {
                                 echo "Skipping tests for ${service} (No test cases available)."
                             } else {
                                 echo "Running tests for ${service}..."
-                                sh "./mvnw -pl ${service} test -Dmaven.repo.local=.maven_cache"
+                                bat "./mvnw -pl ${service} test -Dmaven.repo.local=.maven_cache"
 
                                 // Upload test results
                                 junit "**/${service}/target/surefire-reports/*.xml"
@@ -83,7 +83,7 @@ pipeline {
                                 } else {
                                     echo "JaCoCo coverage report not found for ${service}, skipping..."
                                     // Debug why file is missing
-                                    sh "ls -la ${service}/target/site/jacoco/ || true"
+                                    bat "ls -la ${service}/target/site/jacoco/ || true"
                                 }
                             }
                         } catch (Exception e) {
@@ -108,7 +108,7 @@ pipeline {
                 script {
                     env.BUILD_SERVICES.split(',').each { service ->
                         echo "Verifying ${service}..."
-                        sh "cd ${service} && mvn verify -Dmaven.repo.local=.maven_cache"
+                        bat "cd ${service} && mvn verify -Dmaven.repo.local=.maven_cache"
 
                         echo "Arhiving ${service}..."
                         archiveArtifacts artifacts: "${service}/target/*.jar", allowEmptyArchive: true
