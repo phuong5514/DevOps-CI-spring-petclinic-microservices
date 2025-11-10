@@ -11,7 +11,7 @@ pipeline {
         stage('Validate') {
           steps {
             script {
-              // detecting changes
+              // detecting changes in services
               def changed_services = bat(script: "git diff --name-only HEAD~1", returnStdout: true).trim().split("\n")
               def affectedServices = []
 
